@@ -1,0 +1,30 @@
+{
+  "name": "igloo-local-fork",
+  "private": true,
+  "scripts": {
+    "download": "node scripts/download-igloo-assets.mjs; node scripts/patch-index-bundle.mjs",
+    "build:monkey": "node scripts/export-monkey-placeholder-glb.mjs && node scripts/import-monkey-from-glb.mjs && node scripts/write-monkey-volume-ktx2.mjs --from-glb --force && node scripts/validate-monkey-volume.mjs && node scripts/patch-particle-original.mjs && node scripts/generate-coolbb-logo.mjs && node scripts/generate-social-preview.mjs && node scripts/generate-scene-text.mjs && node scripts/patch-coolbb-agency.mjs && node scripts/patch-coolbb-entry-link-text.mjs && node scripts/patch-scene-taglines.mjs && node scripts/prepare-bg-music.mjs && node scripts/patch-coolbb-audio.mjs && node scripts/patch-coolbb-theme.mjs && node scripts/patch-cube-hud-labels.mjs && node scripts/patch-app3d-boot-diag.mjs && node scripts/patch-createScenes-diag.mjs",
+    "export:monkey-glb": "node scripts/export-monkey-placeholder-glb.mjs --force",
+    "validate:monkey-volume": "node scripts/validate-monkey-volume.mjs",
+    "start": "npx --yes serve . -l 3000 -c serve.json",
+    "verify": "node scripts/verify-assets.mjs",
+    "smoke": "node scripts/smoke-http.mjs"
+  },
+  "dependencies": {
+    "@gltf-transform/cli": "^4.4.2",
+    "@gltf-transform/core": "^4.4.2",
+    "@gltf-transform/extensions": "^4.4.2",
+    "@gltf-transform/functions": "^4.4.2",
+    "@gpu-tex-enc/basis": "^1.16.4",
+    "draco3d": "^1.5.7",
+    "ktx-parse": "^1.0.1",
+    "sharp": "^0.35.3",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@audio/encode-opus": "^1.2.2",
+    "@mongodb-js/zstd": "^7.0.0",
+    "@wasm-audio-decoders/ogg-vorbis": "^0.1.10",
+    "fzstd": "^0.1.1"
+  }
+}

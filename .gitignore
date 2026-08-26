@@ -1,0 +1,5 @@
+node_modules/
+.cursor/
+tmp-*/
+tmp-chrome-profile*/
+*.log
