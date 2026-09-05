@@ -132,7 +132,7 @@ const checks = [
   "t.me/C00LBB",
   "coolBilliBigBoy",
   "rights:`CoolBB\\nAll Rights Reserved.`",
-  "innerobject:\"monkey\"",
+  "innerobject:\"trump\"",
   "vdb:\"monkey_64\"",
 ];
 for (const c of checks) {

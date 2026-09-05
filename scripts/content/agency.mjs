@@ -155,14 +155,14 @@ export const cubes = [
     "03/19/2026",
     -6,
     "cube3",
-    "monkey",
+    "trump",
     "We build production Web3 across Solana and EVM — DeFi, tokenized assets, on-chain economies, and systems users can operate without thinking like engineers.\n\n" +
       "The UX bar in 2026 is intent-first: users sign outcomes, apps and solver networks handle routing. On Ethereum that means ERC-4337 smart accounts, EIP-7702 EOA upgrades, paymasters, and cross-chain intent settlement. On Solana it means PDAs, session keys, sponsored fees, and CPI-native composability — programmable accounts without the EVM bundler overhead.\n\n" +
       "Engineering follows where liquidity and composability actually live.\n\n" +
       "Solana: Anchor programs with strict ownership and PDA validation, DeFi and RWA integrations in one execution environment, deployments tuned for multi-client resilience (Firedancer) and Alpenglow-grade finality.\n\n" +
       "EVM: audited Foundry/Solidity stacks, modular upgrade paths, and wallet flows built on Safe, Privy, and modern wallet-as-a-service infrastructure.\n\n" +
       "We cover protocol architecture, tokenomics, NFT and marketplace infrastructure, liquidity rails, indexing, and mainnet operations — from contract design through the wallet experience on the other side.",
-    "monkey",
+    "trump",
     1.1,
   ),
 ];

@@ -19,6 +19,9 @@ const MARKER_FULL =
 const MARKER_WITH_BULL =
   'this._baseRot="monkey"===this.options.obj?{x:Math.PI/2,y:0,z:Math.PI}:"roblox"===this.options.obj?{x:Math.PI,y:Math.PI,z:0}:"solana"===this.options.obj?{x:0,y:Math.PI,z:0}:"bull"===this.options.obj?{x:Math.PI,y:Math.PI/2,z:0}:{x:0,y:0,z:0}';
 
+const MARKER_WITH_TRUMP =
+  'this._baseRot="monkey"===this.options.obj?{x:Math.PI/2,y:0,z:Math.PI}:"roblox"===this.options.obj?{x:Math.PI,y:Math.PI,z:0}:"solana"===this.options.obj?{x:0,y:Math.PI,z:0}:"bull"===this.options.obj?{x:Math.PI,y:Math.PI/2,z:0}:"trump"===this.options.obj?{x:Math.PI,y:Math.PI,z:0}:{x:0,y:0,z:0}';
+
 const MARKER_WITH_BULL_Y270 =
   'this._baseRot="monkey"===this.options.obj?{x:Math.PI/2,y:0,z:Math.PI}:"roblox"===this.options.obj?{x:Math.PI,y:Math.PI,z:0}:"solana"===this.options.obj?{x:0,y:Math.PI,z:0}:"bull"===this.options.obj?{x:Math.PI,y:Math.PI+Math.PI/2,z:0}:{x:0,y:0,z:0}';
 
@@ -61,6 +64,18 @@ if (s.includes(MARKER_WITH_BULL_Y270)) {
   s = s.replace(MARKER_WITH_BULL_Y270, MARKER_WITH_BULL);
   writeFileSync(bundlePath, s);
   console.log("Bull detail orientation: Y+90° side profile");
+  process.exit(0);
+}
+
+if (s.includes(MARKER_WITH_BULL) && !s.includes('"trump"===this.options.obj')) {
+  s = s.replace(MARKER_WITH_BULL, MARKER_WITH_TRUMP);
+  writeFileSync(bundlePath, s);
+  console.log("Trump detail orientation: X+180° Y+180° (upright, face forward)");
+  process.exit(0);
+}
+
+if (s.includes(MARKER_WITH_TRUMP)) {
+  console.log("Detail orientation: monkey + roblox + solana + bull + trump");
   process.exit(0);
 }
 
