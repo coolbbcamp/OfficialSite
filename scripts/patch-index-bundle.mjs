@@ -29,7 +29,12 @@ if (!s.includes("[boot] waiting App3D")) {
 if (!s.includes("loader hide timeout")) {
   s = s.replace(
     "return e&&await new Promise(c=>{e.$on(\"hidden\",()=>{e.$destroy(),c()}),e.hide()})",
-    'return e&&await new Promise(c=>{const h=setTimeout(()=>{console.warn("[boot] loader hide timeout — forcing");e.$destroy();c()},3000);e.$on("hidden",()=>{clearTimeout(h);e.$destroy();c()}),e.hide()})',
+    'return e&&await new Promise(c=>{const h=setTimeout(()=>{console.warn("[boot] loader hide timeout — forcing");e.$destroy();c()},30000);e.$on("hidden",()=>{clearTimeout(h);e.$destroy();c()}),e.hide()})',
+  );
+} else {
+  s = s.replace(
+    /setTimeout\(\(\)=>\{console\.warn\("\[boot\] loader hide timeout — forcing"\);e\.\$destroy\(\);c\(\)\},(\d+)\)/,
+    'setTimeout(()=>{console.warn("[boot] loader hide timeout — forcing");e.$destroy();c()},30000)',
   );
 }
 
