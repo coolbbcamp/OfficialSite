@@ -10,6 +10,8 @@ import * as THREE from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import sharp from "sharp";
+import { NodeIO } from "@gltf-transform/core";
+import { MeshoptSimplifier } from "meshoptimizer";
 
 const require = createRequire(import.meta.url);
 const draco3d = require("draco3d");
@@ -81,6 +83,21 @@ export function centerAndScale(geometry, targetHeight) {
   return scale;
 }
 
+/** Match MSDF logo plane: 1×1 unit, top-left anchor, Y downward (PlaneGeometry + translate(.5,-.5)). */
+export function normalizeLogoForUiSlot(geometry) {
+  geometry.computeBoundingBox();
+  const bb = geometry.boundingBox;
+  const size = new THREE.Vector3();
+  bb.getSize(size);
+  geometry.translate(size.x / 2, -size.y, 0);
+  const sx = 1 / size.x;
+  const sy = 1 / size.y;
+  geometry.scale(sx, sy, sy);
+  geometry.computeBoundingBox();
+  geometry.computeVertexNormals();
+  return { wordLength: 1, letterHeight: 1, depth: size.z * sy };
+}
+
 function barycentric(px, py, a, b, c) {
   const v0x = c.x - a.x, v0y = c.y - a.y;
   const v1x = b.x - a.x, v1y = b.y - a.y;
@@ -115,7 +132,7 @@ export function generatePlanarUVs(geometry) {
   geometry.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
 }
 
-export function bakeTexture(geometry, size, { dark = false } = {}) {
+export function bakeTexture(geometry, size, { dark = false, hi, lo } = {}) {
   const pos = geometry.attributes.position;
   const uv = geometry.attributes.uv;
   const index = geometry.index;
@@ -133,8 +150,10 @@ export function bakeTexture(geometry, size, { dark = false } = {}) {
   const edge1 = new THREE.Vector3();
   const edge2 = new THREE.Vector3();
 
-  const hi = dark ? [0.32, 0.45, 0.62] : [0.75, 0.84, 0.96];
-  const lo = dark ? [0.06, 0.10, 0.18] : [0.28, 0.38, 0.55];
+  const defaultHi = dark ? [0.32, 0.45, 0.62] : [0.75, 0.84, 0.96];
+  const defaultLo = dark ? [0.06, 0.10, 0.18] : [0.28, 0.38, 0.55];
+  const hiColor = hi ?? defaultHi;
+  const loColor = lo ?? defaultLo;
 
   const triCount = index ? index.count / 3 : pos.count / 3;
 
@@ -181,9 +200,9 @@ export function bakeTexture(geometry, size, { dark = false } = {}) {
         const heightShade = THREE.MathUtils.clamp(p.y * 0.35 + 0.55, 0, 1);
         const shade = THREE.MathUtils.clamp(lambert * 0.75 + heightShade * 0.25, 0, 1);
 
-        const r = lo[0] + (hi[0] - lo[0]) * shade;
-        const g = lo[1] + (hi[1] - lo[1]) * shade;
-        const b = lo[2] + (hi[2] - lo[2]) * shade;
+        const r = loColor[0] + (hiColor[0] - loColor[0]) * shade;
+        const g = loColor[1] + (hiColor[1] - loColor[1]) * shade;
+        const b = loColor[2] + (hiColor[2] - loColor[2]) * shade;
 
         const noise = hash(px * 12.9898 + py * 78.233) * 0.06;
         const idx = (py * size + px) * 4;
@@ -196,6 +215,100 @@ export function bakeTexture(geometry, size, { dark = false } = {}) {
   }
 
   return data;
+}
+
+function sampleRgba(source, texW, texH, u, v) {
+  const fu = Math.max(0, Math.min(0.999999, u));
+  const fv = Math.max(0, Math.min(0.999999, 1 - v));
+  const x = Math.min(texW - 1, Math.floor(fu * texW));
+  const y = Math.min(texH - 1, Math.floor(fv * texH));
+  const i = (y * texW + x) * 4;
+  return [source[i], source[i + 1], source[i + 2], source[i + 3]];
+}
+
+/** Reproject GLB atlas colors onto planar UV layout (for holo/detail with planar mesh UVs). */
+export function bakeTextureFromAtlas(geometry, atlasUvArray, source, texW, texH, outSize) {
+  const pos = geometry.attributes.position;
+  const planarUv = geometry.attributes.uv;
+  const index = geometry.index;
+  const data = new Uint8Array(outSize * outSize * 4);
+
+  const uvA = new THREE.Vector2();
+  const uvB = new THREE.Vector2();
+  const uvC = new THREE.Vector2();
+  const atlasA = new THREE.Vector2();
+  const atlasB = new THREE.Vector2();
+  const atlasC = new THREE.Vector2();
+
+  const triCount = index ? index.count / 3 : pos.count / 3;
+
+  for (let t = 0; t < triCount; t++) {
+    const i0 = index ? index.getX(t * 3) : t * 3;
+    const i1 = index ? index.getX(t * 3 + 1) : t * 3 + 1;
+    const i2 = index ? index.getX(t * 3 + 2) : t * 3 + 2;
+
+    uvA.fromBufferAttribute(planarUv, i0);
+    uvB.fromBufferAttribute(planarUv, i1);
+    uvC.fromBufferAttribute(planarUv, i2);
+    atlasA.set(atlasUvArray[i0 * 2], atlasUvArray[i0 * 2 + 1]);
+    atlasB.set(atlasUvArray[i1 * 2], atlasUvArray[i1 * 2 + 1]);
+    atlasC.set(atlasUvArray[i2 * 2], atlasUvArray[i2 * 2 + 1]);
+
+    const minU = Math.min(uvA.x, uvB.x, uvC.x);
+    const maxU = Math.max(uvA.x, uvB.x, uvC.x);
+    const minV = Math.min(uvA.y, uvB.y, uvC.y);
+    const maxV = Math.max(uvA.y, uvB.y, uvC.y);
+
+    const x0 = Math.max(0, Math.floor(minU * outSize));
+    const x1 = Math.min(outSize - 1, Math.ceil(maxU * outSize));
+    const y0 = Math.max(0, Math.floor((1 - maxV) * outSize));
+    const y1 = Math.min(outSize - 1, Math.ceil((1 - minV) * outSize));
+
+    for (let py = y0; py <= y1; py++) {
+      for (let px = x0; px <= x1; px++) {
+        const u = (px + 0.5) / outSize;
+        const v = 1 - (py + 0.5) / outSize;
+        const w = barycentric(u, v, uvA, uvB, uvC);
+        if (w.x < 0 || w.y < 0 || w.z < 0) continue;
+
+        const au = atlasA.x * w.x + atlasB.x * w.y + atlasC.x * w.z;
+        const av = atlasA.y * w.x + atlasB.y * w.y + atlasC.y * w.z;
+        const [r, g, b, a] = sampleRgba(source, texW, texH, au, av);
+        const idx = (py * outSize + px) * 4;
+        data[idx] = r;
+        data[idx + 1] = g;
+        data[idx + 2] = b;
+        data[idx + 3] = a;
+      }
+    }
+  }
+
+  return data;
+}
+
+export async function extractGlbBaseColor(glbPath) {
+  const io = new NodeIO();
+  const doc = await io.read(glbPath);
+  const textures = doc.getRoot().listTextures();
+  const base =
+    textures.find((t) => t.getName() === "base_color") ??
+    textures.find((t) => (t.getMimeType() || "").startsWith("image/"));
+  if (!base) throw new Error(`No base color texture in ${glbPath}`);
+  const image = base.getImage();
+  if (!image?.byteLength) throw new Error("Base color texture has no image bytes");
+  const { data, info } = await sharp(image).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  return { data, width: info.width, height: info.height, name: base.getName() || "(unnamed)" };
+}
+
+export function darkenTextureData(data, factor = 0.38) {
+  const out = new Uint8Array(data.length);
+  for (let i = 0; i < data.length; i += 4) {
+    out[i] = Math.round(data[i] * factor);
+    out[i + 1] = Math.round(data[i + 1] * factor);
+    out[i + 2] = Math.round(data[i + 2] * factor);
+    out[i + 3] = data[i + 3];
+  }
+  return out;
 }
 
 export async function loadGlbGeometry(glbPath) {
@@ -225,6 +338,32 @@ export async function loadGlbGeometry(glbPath) {
   const merged = mergeGeometries(geometries, false);
   if (!merged.attributes.normal) merged.computeVertexNormals();
   return merged;
+}
+
+/** Reduce triangle count so browser Draco can decode the logo mesh reliably. */
+export async function simplifyGeometry(geometry, targetTriangles = 10000) {
+  if (!geometry.index) return geometry;
+  await MeshoptSimplifier.ready;
+
+  const index = geometry.index.array;
+  const positions = geometry.attributes.position.array;
+  const targetIndexCount = Math.min(index.length, targetTriangles * 3);
+  if (targetIndexCount >= index.length - 3) return geometry;
+
+  const [newIndices] = MeshoptSimplifier.simplify(
+    new Uint32Array(index),
+    new Float32Array(positions),
+    3,
+    targetIndexCount,
+    0.05,
+  );
+
+  if (!newIndices.length) return geometry;
+
+  const simplified = geometry.clone();
+  simplified.setIndex(new THREE.BufferAttribute(newIndices, 1));
+  simplified.computeVertexNormals();
+  return simplified;
 }
 
 export function encodeGeometryToDrc(geometry, encoderModule) {

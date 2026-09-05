@@ -32,6 +32,10 @@ async function main() {
   console.log(`Loading ${displayPath}...`);
   const geometry = await loadGlbGeometry(displayPath);
 
+  // GLB export is often Z-up; stand bust upright for Y-up Three.js scenes.
+  geometry.rotateX(Math.PI / 2);
+  geometry.rotateZ(Math.PI);
+
   const targetHeight = await getPudgyHeight();
   centerAndScale(geometry, targetHeight);
 

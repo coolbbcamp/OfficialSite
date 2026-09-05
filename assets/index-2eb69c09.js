@@ -23,119 +23,28 @@
                 pointer-events: none;
             }
 
-            .ascii:before {
+            .ascii {
                 position: relative;
-                color: #00E5FF;
-                content: '----------';
-                font-size: 17px;
-                font-family: monospace;
-                font-weight: bold;
-                animation-name: head;
-                animation-duration:5s;
-                animation-iteration-count: infinite;
-                text-shadow: 0px 0px 10px rgba(0,229,255,0.55), 0px 0px 20px rgba(0,229,255,0.2);
+                overflow: hidden;
+                width: min(92vw, 24em);
+                height: 1.5em;
             }
 
-            @keyframes head {
-                0% {content: '---===+++='}
-                1% {content: '----===+++'}
-                2% {content: '-----===++'}
-                3% {content: '------===+'}
-                4% {content: '=------==='}
-                5% {content: '==------=='}
-                6% {content: '+==------='}
-                7% {content: '++==------'}
-                8% {content: '=++==-----'}
-                9% {content: '==++==----'}
-                10% {content: '-==++==---'}
-                11% {content: '--==++==--'}
-                12% {content: '=--==++==-'}
-                13% {content: '==--==++=='}
-                14% {content: '+==--==++='}
-                15% {content: '=+==--==++'}
-                16% {content: '==+==--==+'}
-                17% {content: '-==+==--=='}
-                18% {content: '--==+==--='}
-                19% {content: '---==+==--'}
-                20% {content: '=---==+==-'}
-                21% {content: '==---==+=='}
-                22% {content: '===---==+='}
-                23% {content: '+===---==+'}
-                24% {content: '++===---=='}
-                25% {content: '+++===---='}
-                26% {content: '=+++===---'}
-                27% {content: '==+++===--'}
-                28% {content: '===+++===-'}
-                29% {content: '-===+++==='}
-                30% {content: '--===+++=='}
-                31% {content: '---===+++='}
-                32% {content: '----===+++'}
-                33% {content: '=----===++'}
-                34% {content: '+=----===+'}
-                35% {content: '=+=----==='}
-                36% {content: '-=+=----=='}
-                37% {content: '--=+=----='}
-                38% {content: '---=+=----'}
-                39% {content: '----=+=---'}
-                40% {content: '=----=+=--'}
-                41% {content: '==----=+=-'}
-                42% {content: '===----=+='}
-                43% {content: '+===----=+'}
-                44% {content: '++===----='}
-                45% {content: '+++===----'}
-                46% {content: '=+++===---'}
-                47% {content: '==+++===--'}
-                48% {content: '===+++===-'}
-                49% {content: '-===+++==='}
-                50% {content: '--===+++=='}
-                51% {content: '---===+++='}
-                52% {content: '----===+++'}
-                53% {content: '-----===++'}
-                54% {content: '------===+'}
-                55% {content: '=------==='}
-                56% {content: '==------=='}
-                57% {content: '+==------='}
-                58% {content: '++==------'}
-                59% {content: '=++==-----'}
-                60% {content: '==++==----'}
-                61% {content: '-==++==---'}
-                62% {content: '--==++==--'}
-                63% {content: '=--==++==-'}
-                64% {content: '==--==++=='}
-                65% {content: '+==--==++='}
-                66% {content: '=+==--==++'}
-                67% {content: '==+==--==+'}
-                68% {content: '-==+==--=='}
-                69% {content: '--==+==--='}
-                70% {content: '---==+==--'}
-                71% {content: '=---==+==-'}
-                72% {content: '==---==+=='}
-                73% {content: '===---==+='}
-                74% {content: '+===---==+'}
-                75% {content: '++===---=='}
-                76% {content: '+++===---='}
-                77% {content: '=+++===---'}
-                78% {content: '==+++===--'}
-                79% {content: '===+++===-'}
-                80% {content: '-===+++==='}
-                81% {content: '--===+++=='}
-                82% {content: '---===+++='}
-                83% {content: '----===+++'}
-                84% {content: '=----===++'}
-                85% {content: '+=----===+'}
-                86% {content: '=+=----==='}
-                87% {content: '-=+=----=='}
-                88% {content: '--=+=----='}
-                89% {content: '---=+=----'}
-                90% {content: '----=+=---'}
-                91% {content: '=----=+=--'}
-                92% {content: '==----=+=-'}
-                93% {content: '===----=+='}
-                94% {content: '+===----=+'}
-                95% {content: '++===----='}
-                96% {content: '+++===----'}
-                97% {content: '=+++===---'}
-                98% {content: '==+++===--'}
-                99% {content: '===+++===-'}
-                100% {content: '===+++===-'}
-            }`,U(e,"class","ascii"),U(n,"id","loader")},m(l,a){rt(l,n,a),C(n,e),C(n,r),C(n,i),t[6](n),f=!0,u||(s=Et(n,"outroend",t[7]),u=!0)},p(l,a){t=l},i(l){f||(o&&o.end(1),c&&c.end(1),f=!0)},o(l){o=W(e,J,{duration:250,easing:G}),c=W(n,J,{duration:750,easing:G}),f=!1},d(l){l&&j(n),l&&o&&o.end(),t[6](null),l&&c&&c.end(),u=!1,s()}}}function Ut(t){let n,e,o=t[1]&&Q(t);return{c(){o&&o.c(),n=xt()},m(r,i){o&&o.m(r,i),rt(r,n,i),e=!0},p(r,[i]){r[1]?o?(o.p(r,i),i&2&&S(o,1)):(o=Q(r),o.c(),S(o,1),o.m(n.parentNode,n)):o&&(jt(),K(o,1,1,()=>{o=null}),Bt())},i(r){e||(S(o),e=!0)},o(r){K(o),e=!1},d(r){o&&o.d(r),r&&j(n)}}}function Vt(t,n,e){const o=St();let r=null,i=!1;const c=()=>r,f=()=>{e(1,i=!0)},u=()=>{e(1,i=!1)};function s(a){I[a?"unshift":"push"](()=>{r=a,e(0,r)})}return[r,i,o,c,f,u,s,()=>{o("hidden")}]}class Ht extends Ft{constructor(n){super(),Tt(this,n,Vt,Ut,gt,{getEl:3,show:4,hide:5})}get getEl(){return this.$$.ctx[3]}get show(){return this.$$.ctx[4]}get hide(){return this.$$.ctx[5]}}const ut=document.createElement("style");ut.textContent=pt;document.head.append(ut);const X="width=device-width, initial-scale=1.0, shrink-to-fit=no, minimal-ui, viewport-fit=cover",Y=document.querySelector("meta[viewport]");Y?Y.setAttribute("content",X):document.head.insertAdjacentHTML("beforeend",`<meta name="viewport" content="${X}">`);(async t=>{if(window.__coolbbBoot)return;window.__coolbbBoot=1;let n=null;t!=null&&t.cnt?n=t.cnt:(n=document.createElement("div"),n.id="app",document.body.prepend(n)),new Proxy(new URLSearchParams(window.location.search),{get:(c,f)=>c.get(f)});const e=new Ht({target:n});e==null||e.show();const o=(await mt(()=>import("./App3D-f554a111.js"),[])).default;console.log("[boot] waiting App3D.ready");const i=await new o({target:n,props:{interactionNode:t==null?void 0:t.interactionNode,relativePath:t==null?void 0:t.relativePath},...e?{anchor:e.getEl()}:{}}).ready;console.log("[boot] App3D.ready done",i);return e&&await new Promise(c=>{const h=setTimeout(()=>{console.warn("[boot] loader hide timeout — forcing");e.$destroy();c()},3000);e.$on("hidden",()=>{clearTimeout(h);e.$destroy();c()}),e.hide()}),i==null?void 0:i()})();export{Ft as S,rt as a,vt as b,xt as c,j as d,L as e,K as f,Bt as g,Gt as h,Tt as i,qt as j,U as k,jt as l,zt as m,k as n,Kt as o,Wt as p,I as q,gt as s,S as t};
+            .ascii:before {
+                display: inline-block;
+                white-space: nowrap;
+                color: #00E5FF;
+                content: 'CoolBB Base Camp    CoolBB Base Camp    ';
+                font-size: 15px;
+                font-family: IBMPlexMono-Medium, IBMPlexMono, monospace;
+                font-weight: 500;
+                letter-spacing: 0.1em;
+                text-shadow: 0px 0px 10px rgba(0,229,255,0.55), 0px 0px 20px rgba(0,229,255,0.2);
+                animation: coolbb-flow 3.2s linear infinite;
+                will-change: transform;
+            }
+
+            @keyframes coolbb-flow {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }}`,U(e,"class","ascii"),U(n,"id","loader")},m(l,a){rt(l,n,a),C(n,e),C(n,r),C(n,i),t[6](n),f=!0,u||(s=Et(n,"outroend",t[7]),u=!0)},p(l,a){t=l},i(l){f||(o&&o.end(1),c&&c.end(1),f=!0)},o(l){o=W(e,J,{duration:250,easing:G}),c=W(n,J,{duration:750,easing:G}),f=!1},d(l){l&&j(n),l&&o&&o.end(),t[6](null),l&&c&&c.end(),u=!1,s()}}}function Ut(t){let n,e,o=t[1]&&Q(t);return{c(){o&&o.c(),n=xt()},m(r,i){o&&o.m(r,i),rt(r,n,i),e=!0},p(r,[i]){r[1]?o?(o.p(r,i),i&2&&S(o,1)):(o=Q(r),o.c(),S(o,1),o.m(n.parentNode,n)):o&&(jt(),K(o,1,1,()=>{o=null}),Bt())},i(r){e||(S(o),e=!0)},o(r){K(o),e=!1},d(r){o&&o.d(r),r&&j(n)}}}function Vt(t,n,e){const o=St();let r=null,i=!1;const c=()=>r,f=()=>{e(1,i=!0)},u=()=>{e(1,i=!1)};function s(a){I[a?"unshift":"push"](()=>{r=a,e(0,r)})}return[r,i,o,c,f,u,s,()=>{o("hidden")}]}class Ht extends Ft{constructor(n){super(),Tt(this,n,Vt,Ut,gt,{getEl:3,show:4,hide:5})}get getEl(){return this.$$.ctx[3]}get show(){return this.$$.ctx[4]}get hide(){return this.$$.ctx[5]}}const ut=document.createElement("style");ut.textContent=pt;document.head.append(ut);const X="width=device-width, initial-scale=1.0, shrink-to-fit=no, minimal-ui, viewport-fit=cover",Y=document.querySelector("meta[viewport]");Y?Y.setAttribute("content",X):document.head.insertAdjacentHTML("beforeend",`<meta name="viewport" content="${X}">`);(async t=>{if(window.__coolbbBoot)return;window.__coolbbBoot=1;let n=null;t!=null&&t.cnt?n=t.cnt:(n=document.createElement("div"),n.id="app",document.body.prepend(n)),new Proxy(new URLSearchParams(window.location.search),{get:(c,f)=>c.get(f)});const e=new Ht({target:n});e==null||e.show();const o=(await mt(()=>import("./App3D-coolbb.js?v=1788587550676"),[])).default;console.log("[boot] waiting App3D.ready");const i=await new o({target:n,props:{interactionNode:t==null?void 0:t.interactionNode,relativePath:t==null?void 0:t.relativePath},...e?{anchor:e.getEl()}:{}}).ready;console.log("[boot] App3D.ready done",i);return e&&await new Promise(c=>{const h=setTimeout(()=>{console.warn("[boot] loader hide timeout — forcing");e.$destroy();c()},3000);e.$on("hidden",()=>{clearTimeout(h);e.$destroy();c()}),e.hide()}),i==null?void 0:i()})();export{Ft as S,rt as a,vt as b,xt as c,j as d,L as e,K as f,Bt as g,Gt as h,Tt as i,qt as j,U as k,jt as l,zt as m,k as n,Kt as o,Wt as p,I as q,gt as s,S as t};

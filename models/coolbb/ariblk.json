@@ -1,0 +1,107 @@
+{
+    "pages": [
+        "logo-msdf.png"
+    ],
+    "chars": [
+        {
+            "id": 67,
+            "index": 38,
+            "char": "C",
+            "width": 39,
+            "height": 42,
+            "xoffset": -1,
+            "yoffset": -4,
+            "xadvance": 37,
+            "chnl": 15,
+            "x": 8,
+            "y": 8,
+            "page": 0
+        },
+        {
+            "id": 108,
+            "index": 79,
+            "char": "l",
+            "width": 16,
+            "height": 40,
+            "xoffset": 0,
+            "yoffset": -3,
+            "xadvance": 16,
+            "chnl": 15,
+            "x": 51,
+            "y": 8,
+            "page": 0
+        },
+        {
+            "id": 66,
+            "index": 37,
+            "char": "B",
+            "width": 38,
+            "height": 40,
+            "xoffset": 1,
+            "yoffset": -3,
+            "xadvance": 37,
+            "chnl": 15,
+            "x": 8,
+            "y": 54,
+            "page": 0
+        },
+        {
+            "id": 111,
+            "index": 82,
+            "char": "o",
+            "width": 35,
+            "height": 32,
+            "xoffset": -1,
+            "yoffset": 6,
+            "xadvance": 32,
+            "chnl": 15,
+            "x": 71,
+            "y": 8,
+            "page": 0
+        }
+    ],
+    "info": {
+        "face": "ariblk",
+        "size": 48,
+        "bold": 0,
+        "italic": 0,
+        "charset": [
+            "C",
+            "o",
+            "l",
+            "B"
+        ],
+        "unicode": 1,
+        "stretchH": 100,
+        "smooth": 1,
+        "aa": 1,
+        "padding": [
+            3,
+            3,
+            3,
+            3
+        ],
+        "spacing": [
+            0,
+            0
+        ],
+        "outline": 0
+    },
+    "common": {
+        "lineHeight": 51,
+        "base": 34,
+        "scaleW": 114,
+        "scaleH": 102,
+        "pages": 1,
+        "packed": 0,
+        "alphaChnl": 0,
+        "redChnl": 0,
+        "greenChnl": 0,
+        "blueChnl": 0
+    },
+    "distanceField": {
+        "fieldType": "msdf",
+        "distanceRange": 6
+    },
+    "kernings": []
+}

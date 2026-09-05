@@ -19,8 +19,9 @@ const pairs = [
   [`colorTitle:"#4A5568"`, `colorTitle:"#00D4EE"`],
   [`colorProjectTitle:"#7A8FAE"`, `colorProjectTitle:"#FFB300"`],
   [`colorProjectTitle:"#6B7280"`, `colorProjectTitle:"#FFB300"`],
-  [`colorProjectText:"#B8C5DA"`, `colorProjectText:"#9AB0C4"`],
-  [`colorProjectText:"#A1AAB7"`, `colorProjectText:"#9AB0C4"`],
+  [`colorProjectText:"#B8C5DA"`, `colorProjectText:"#D4ECFA"`],
+  [`colorProjectText:"#A1AAB7"`, `colorProjectText:"#D4ECFA"`],
+  [`colorProjectText:"#9AB0C4"`, `colorProjectText:"#D4ECFA"`],
 
   // Entry hologram particles — cyan core, amber velocity streaks
   [`uColorInitial:{value:new Z("#c8e4ff")}`, `uColorInitial:{value:new Z("#66E8FF")}`],
@@ -73,6 +74,88 @@ const pairs = [
 
   // Portfolio floor shadow tint
   [`mix(vec3(0.5, 0.7, 1.0) * 0.1, vec3(1.0), shadow)`, `mix(vec3(0.0, 0.85, 1.0) * 0.12, vec3(1.0), shadow)`],
+
+  // Portfolio detail room (JF) — match camp teal/cyan atmosphere
+  [
+    `uColor1:{value:new Z("#09121f")},uColor2:{value:new Z("#6b7685")},tNoise:{value:le.load("wind_noise.ktx2"`,
+    `uColor1:{value:new Z("#0A2234")},uColor2:{value:new Z("#1A6888")},tNoise:{value:le.load("wind_noise.ktx2"`,
+  ],
+  [
+    `uColor1:{value:new Z("#0A2234")},uColor2:{value:new Z("#1A6888")},tNoise:{value:le.load("wind_noise.ktx2"`,
+    `uColor1:{value:new Z("#0C2A40")},uColor2:{value:new Z("#2088AA")},tNoise:{value:le.load("wind_noise.ktx2"`,
+  ],
+
+  // Portfolio holo model — brighter cyan glow (VF detail objects)
+  [`color *= mix(0.025, 0.15, noise)`, `color *= mix(0.1, 0.55, noise)`],
+  [`color *= mix(0.1, 0.55, noise)`, `color *= mix(0.12, 0.62, noise)`],
+  [`color += caustics * color.b * 30.0`, `color += caustics * color.b * 48.0`],
+  [`color += caustics * color.b * 48.0`, `color += caustics * color.b * 55.0`],
+
+  // Portfolio light shaft + bokeh plane
+  [`uColor:{value:new Z("#d1e3ff")}`, `uColor:{value:new Z("#7EEAFF")}`],
+  [`uColor:{value:new Z("#7EEAFF")}`, `uColor:{value:new Z("#5CE8FF")}`],
+  [`float alpha = circularGradient * noise * 0.07`, `float alpha = circularGradient * noise * 0.18`],
+  [
+    `float alpha = (circularGradient + bokeh * circularGradient) * 0.15`,
+    `float alpha = (circularGradient + bokeh * circularGradient) * 0.32`,
+  ],
+
+  // Portfolio ambient particles
+  [`uColor:{value:new Z("#2d3133")},tSim:{value:this.scene.mouseSim.finalRT`, `uColor:{value:new Z("#4A9BB5")},tSim:{value:this.scene.mouseSim.finalRT`],
+  [`uColor:{value:new Z("#4A9BB5")},tSim:{value:this.scene.mouseSim.finalRT`, `uColor:{value:new Z("#6ABDD4")},tSim:{value:this.scene.mouseSim.finalRT`],
+  [`vLightFalloff *= 0.5`, `vLightFalloff *= 0.82`],
+  [`vLightFalloff *= 0.82`, `vLightFalloff *= 0.88`],
+
+  // Cube scroll scene (aF / k3) — brighter teal + subtle warm accent (not heavy yellow)
+  [
+    `uProgress:{value:0},uColor1:{value:new Z("#0A2234")},uColor2:{value:new Z("#241508")},tPerlin:{value:le.load("perlin-datatexture.ktx2","colordata-repeat")},tDotPattern:{value:le.load("cubes/dot_pattern.ktx2"`,
+    `uProgress:{value:0},uColor1:{value:new Z("#124858")},uColor2:{value:new Z("#3A4A58")},tPerlin:{value:le.load("perlin-datatexture.ktx2","colordata-repeat")},tDotPattern:{value:le.load("cubes/dot_pattern.ktx2"`,
+  ],
+  [
+    `uProgress:{value:0},uColor1:{value:new Z("#164858")},uColor2:{value:new Z("#8B6520")},tPerlin:{value:le.load("perlin-datatexture.ktx2","colordata-repeat")},tDotPattern:{value:le.load("cubes/dot_pattern.ktx2"`,
+    `uProgress:{value:0},uColor1:{value:new Z("#124858")},uColor2:{value:new Z("#3A4A58")},tPerlin:{value:le.load("perlin-datatexture.ktx2","colordata-repeat")},tDotPattern:{value:le.load("cubes/dot_pattern.ktx2"`,
+  ],
+  [
+    `uProgress:{value:0},uColor1:{value:new Z("#1A5270")},uColor2:{value:new Z("#A07828")},tPerlin:{value:le.load("perlin-datatexture.ktx2","colordata-repeat")},tDotPattern:{value:le.load("cubes/dot_pattern.ktx2"`,
+    `uProgress:{value:0},uColor1:{value:new Z("#124858")},uColor2:{value:new Z("#3A4A58")},tPerlin:{value:le.load("perlin-datatexture.ktx2","colordata-repeat")},tDotPattern:{value:le.load("cubes/dot_pattern.ktx2"`,
+  ],
+  [
+    `vec3 color = mix(uColor1, uColor2, perlin);
+                    color = mix(color, vec3(0.78, 0.62, 0.24), perlin * 0.48);
+
+                    // dot pattern`,
+    `vec3 color = mix(uColor1, uColor2, perlin);
+                    color = mix(color, vec3(0.48, 0.42, 0.30), perlin * 0.16);
+
+                    // dot pattern`,
+  ],
+  [
+    `vec3 color = mix(uColor1, uColor2, perlin);
+
+                    // dot pattern`,
+    `vec3 color = mix(uColor1, uColor2, perlin);
+                    color = mix(color, vec3(0.48, 0.42, 0.30), perlin * 0.16);
+
+                    // dot pattern`,
+  ],
+  [`color += dots * dotfade * vec3(1.0, 0.88, 0.42);`, `color += dots * dotfade * vec3(0.88, 0.94, 1.0);`],
+  [`color += dots * dotfade;`, `color += dots * dotfade * vec3(0.88, 0.94, 1.0);`],
+  [
+    `uProgress:{value:0},uColor1:{value:new Z("#0A2234")},tMap:{value:le.load("cubes/blurrytext_atlas.ktx2"`,
+    `uProgress:{value:0},uColor1:{value:new Z("#124858")},tMap:{value:le.load("cubes/blurrytext_atlas.ktx2"`,
+  ],
+  [
+    `uProgress:{value:0},uColor1:{value:new Z("#1A5270")},tMap:{value:le.load("cubes/blurrytext_atlas.ktx2"`,
+    `uProgress:{value:0},uColor1:{value:new Z("#124858")},tMap:{value:le.load("cubes/blurrytext_atlas.ktx2"`,
+  ],
+  [`uColor1:{value:new Z("#886a3d")}`, `uColor1:{value:new Z("#9A8870")}`],
+  [`uColor1:{value:new Z("#C09850")}`, `uColor1:{value:new Z("#9A8870")}`],
+  [`uColor:{value:new Z("#3A5060")}`, `uColor:{value:new Z("#5A7890")}`],
+  [`s.material.envMapIntensity=.91`, `s.material.envMapIntensity=1.18`],
+  [
+    `O3(this,this.composer);const e=q.devScene?this.composer:he.composer;e.__hasBloomPass||(e.__hasBloomPass=!0,e.addPass(new Fd().addBloom({debug:q.devScene,levels:6,luminanceThreshold:.2,intensity:1,radius:.85`,
+    `O3(this,this.composer);const e=q.devScene?this.composer:he.composer;e.__hasBloomPass||(e.__hasBloomPass=!0,e.addPass(new Fd().addBloom({debug:q.devScene,levels:6,luminanceThreshold:.08,intensity:1.15,radius:.9`,
+  ],
 ];
 
 for (const [from, to] of pairs) {

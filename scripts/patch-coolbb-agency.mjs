@@ -130,7 +130,7 @@ const checks = [
   "hash:\"memecoin\"",
   "hash:\"web3\"",
   "t.me/C00LBB",
-  "2034555812891255030",
+  "coolBilliBigBoy",
   "rights:`CoolBB\\nAll Rights Reserved.`",
   "innerobject:\"monkey\"",
   "vdb:\"monkey_64\"",

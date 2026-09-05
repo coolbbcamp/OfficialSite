@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(fileURLToPath(new URL(".", import.meta.url)), "..");
-const BASE = "http://127.0.0.1:3000";
+const BASE = process.env.BASE_URL || "http://127.0.0.1:3000";
 
 const downloadSrc = readFileSync(join(ROOT, "scripts", "download-igloo-assets.mjs"), "utf8");
 const manifestLines = [
@@ -13,8 +13,13 @@ const manifestLines = [
     .map((l) => l.trim().replace(/^"|",?$/g, "")),
   "geometries/monkey.drc",
   "geometries/funding_text.drc",
+  "geometries/roblox.drc",
   "images/cubes/monkey_color.ktx2",
+  "images/cubes/roblox_color.ktx2",
+  "images/cubes/roblox_color.png",
+  "App3D-coolbb.js",
   "images/monkey_dark_color.ktx2",
+  "images/roblox_dark_color.ktx2",
   "images/igloo/funding_text_color.ktx2",
   "images/igloo/funding_text_exploded_color.ktx2",
 ];
@@ -31,8 +36,13 @@ async function check(path) {
 async function main() {
   const indexRes = await fetch(`${BASE}/`);
   const indexHtml = await indexRes.text();
-  if (!indexHtml.includes("/assets/index-2eb69c09.js")) {
+  if (!indexHtml.includes("index-2eb69c09.js")) {
     throw new Error("index.html missing entry script");
+  }
+  if (!indexHtml.includes("CoolBB")) {
+    throw new Error(
+      `Wrong app on ${BASE} (expected CoolBB). Stop other servers on this port or set BASE_URL.`,
+    );
   }
   console.log("OK index.html");
 

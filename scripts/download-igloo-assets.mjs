@@ -7,9 +7,7 @@ const ASSETS = join(ROOT, "assets");
 const BASE = "https://www.igloo.inc/assets/";
 
 const MANIFEST = [
-  // JS bundles and workers
-  "index-2eb69c09.js",
-  "App3D-f554a111.js",
+  // JS bundles and workers (App3D/index are patched locally — do not re-download)
   "bitmapworker-046527f8.js",
   "exrworker-41cbee65.js",
   "msdfworker-ac346fa7.js",
@@ -138,11 +136,10 @@ const MANIFEST = [
   "images/volumes/x_64.ktx2",
   "images/volumes/medium_32.ktx2",
 
-  // UI
+  // UI — logo-datatexture.ktx2 is generated locally (npm run build:monkey)
   "images/ui/sound-datatexture.ktx2",
   "images/ui/arrow-datatexture.ktx2",
   "images/ui/close-datatexture.ktx2",
-  "images/ui/logo-datatexture.ktx2",
   "images/ui/visit-datatexture.ktx2",
 
   // Noise
